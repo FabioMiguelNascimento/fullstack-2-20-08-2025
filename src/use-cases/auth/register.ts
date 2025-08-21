@@ -1,10 +1,11 @@
 import { ConflictError } from "@/infrastructure/https/error/HttpErrors.js"
 import IUserRepository from "@/interfaces/user.interface.js"
-import { CreateUserSchema, User } from "@/schema/user.schema.js"
+import { CreateUserSchema } from "@/schema/user.schema.js"
+import { RegisterResponse } from "@/types/auth.js"
 import { encodePassword } from "@/utils/bcrypt.js"
 
 export default function makeRegisterUser(repo: IUserRepository) {
-    return function createUser(registerPayload: CreateUserSchema): User {
+    return function createUser(registerPayload: CreateUserSchema): RegisterResponse {
         const existingUser = repo.findByEmail(registerPayload.email)
 
         if(existingUser) {
@@ -13,10 +14,13 @@ export default function makeRegisterUser(repo: IUserRepository) {
 
         const hashedPassword = encodePassword(registerPayload.password)
 
-        registerPayload = { ...registerPayload, password: hashedPassword}
+        const userToCreate = { ...registerPayload, password: hashedPassword }
 
-        const user = repo.create(registerPayload)
+        const user = repo.create(userToCreate)
 
-        return user
+        const { password, ...userWithoutPassword } = user
+        const registerResponse: RegisterResponse = userWithoutPassword
+
+    return registerResponse
     }
 }
