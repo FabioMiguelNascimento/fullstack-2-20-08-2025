@@ -19,4 +19,10 @@ export default class ProductRepository implements IProductRepository {
 
         return products
     }
+
+    findById(id: number): Product | undefined {
+        const product = db.products.find(p => p.id == id)
+
+        return product
+    }
 }

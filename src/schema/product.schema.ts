@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const productIdSchema = z.object({
-  id: z.number().int().positive(),
+  id: z.coerce.number().int().positive(),
 });
 
 export const productSchema = z.object({

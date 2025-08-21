@@ -2,6 +2,7 @@ import ProductRepository from '@/infrastructure/database/product.repository.js';
 import { CreateProductInput } from '@/schema/product.schema.js';
 import makeCreateProduct from '@/use-cases/product/create.js';
 import makeFindAllProducts from '@/use-cases/product/findAll.js';
+import makeFindProductById from '@/use-cases/product/findById.js';
 import { NextFunction, Request, Response } from 'express';
 
 const repo = new ProductRepository();
@@ -32,6 +33,13 @@ export const handleFindAllProducts = async (req: Request, res: Response, next: N
 
 export const handleFindProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
+  // `validateParams` puts parsed params into `req.validatedData` as an object
+  const { id } = req.validatedData as { id: number };
+
+    const findProductByIdCase = makeFindProductById(repo)
+  const product = findProductByIdCase(id)
+
+    res.status(200).json({ code: 200, message: "Produto encontrado com sucesso", data: product})
   } catch (err) {
     next(err)
   }
