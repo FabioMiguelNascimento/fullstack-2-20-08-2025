@@ -1,8 +1,8 @@
 import { CreateUserSchema, User } from "@/schema/user.schema.js";
 
-export default interface UsersInterface {
-    create(user: CreateUserSchema): User | void;
-    findUserByEmail(email: string): User | null;
+export default interface IUserRepository {
+    create(user: CreateUserSchema): User;
+    findByEmail(email: string): User | undefined;
     findAll(): User[] | void;
     findUserById(id: string): User | null;
     delete(id: string): void;

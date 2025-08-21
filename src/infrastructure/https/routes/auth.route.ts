@@ -5,7 +5,7 @@ import { handleLoginUser, handleRegisterUser } from '../controller/auth.controll
 
 const router = express.Router();
 
-router.post('/login', validateBody(loginSchema), handleLoginUser);
 router.post('/register', validateBody(registerSchema), handleRegisterUser);
+router.post('/login', validateBody(loginSchema), handleLoginUser);
 
 export default router;
