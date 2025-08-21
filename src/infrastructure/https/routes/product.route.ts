@@ -12,7 +12,7 @@ router.get('/',handleFindAllProducts);
 
 router.get('/:id', validateParams(productIdSchema), handleFindProduct);
 
-router.use(authMiddleware, requirePermission(['ADMIN', 'MANAGER', 'SELLER']));
+// router.use(authMiddleware, requirePermission(['ADMIN', 'MANAGER', 'SELLER']));
 
 router.post('/',validateBody(createProductSchema),handleCreateProduct);
 

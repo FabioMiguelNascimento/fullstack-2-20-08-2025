@@ -5,7 +5,7 @@ export const productIdSchema = z.object({
 });
 
 export const productSchema = z.object({
-  id: productIdSchema,
+  id: z.number().int().positive(),
   name: z.string().min(1, 'Nome é necessário'),
   description: z.string().optional(),
   price: z.number().min(0, 'Preço deve ser um número positivo'),
