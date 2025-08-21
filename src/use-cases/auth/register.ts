@@ -4,7 +4,7 @@ import { CreateUserSchema, User } from "@/schema/user.schema.js"
 import { encodePassword } from "@/utils/bcrypt.js"
 
 export default function makeRegisterUser(repo: IUserRepository) {
-    return function createProduct(registerPayload: CreateUserSchema): User {
+    return function createUser(registerPayload: CreateUserSchema): User {
         const existingUser = repo.findByEmail(registerPayload.email)
 
         if(existingUser) {
