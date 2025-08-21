@@ -33,10 +33,9 @@ export const handleFindAllProducts = async (req: Request, res: Response, next: N
 
 export const handleFindProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-  // `validateParams` puts parsed params into `req.validatedData` as an object
   const { id } = req.validatedData as { id: number };
 
-    const findProductByIdCase = makeFindProductById(repo)
+  const findProductByIdCase = makeFindProductById(repo)
   const product = findProductByIdCase(id)
 
     res.status(200).json({ code: 200, message: "Produto encontrado com sucesso", data: product})
@@ -53,27 +52,6 @@ export const handleUpdateProduct = async (req: Request, res: Response, next: Nex
 };
 
 export const handleDeleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const handleAddProductImages = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const handleDeleteProductImage = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const handleGetImageUrls = async (req: Request, res: Response, next: NextFunction) => {
   try {
   } catch (error) {
     next(error);
