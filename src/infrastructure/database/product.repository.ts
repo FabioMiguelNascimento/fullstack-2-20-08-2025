@@ -25,4 +25,10 @@ export default class ProductRepository implements IProductRepository {
 
         return product
     }
+
+    delete(id: number): void {
+        const index = db.products.findIndex(x => x.id == id)
+
+        db.products.splice(index, 1)
+    }
 }

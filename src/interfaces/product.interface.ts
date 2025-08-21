@@ -5,5 +5,5 @@ export default interface IProductRepository {
     findAll(): Product[];
     findById(id: number): Product | undefined;
     update(id: string, data: UpdateProductInput): Product | null;
-    delete(id: string): void;
+    delete(id: number): void;
 }

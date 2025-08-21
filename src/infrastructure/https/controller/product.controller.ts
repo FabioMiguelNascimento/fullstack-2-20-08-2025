@@ -1,6 +1,7 @@
 import ProductRepository from '@/infrastructure/database/product.repository.js';
 import { CreateProductInput } from '@/schema/product.schema.js';
 import makeCreateProduct from '@/use-cases/product/create.js';
+import makeDeleteProduct from '@/use-cases/product/delete.js';
 import makeFindAllProducts from '@/use-cases/product/findAll.js';
 import makeFindProductById from '@/use-cases/product/findById.js';
 import { NextFunction, Request, Response } from 'express';
@@ -53,6 +54,12 @@ export const handleUpdateProduct = async (req: Request, res: Response, next: Nex
 
 export const handleDeleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { id } = req.validatedData as { id: number };
+
+    const deleteProductCase = makeDeleteProduct(repo)
+    deleteProductCase(id)
+
+    res.status(204).send()
   } catch (error) {
     next(error);
   }
