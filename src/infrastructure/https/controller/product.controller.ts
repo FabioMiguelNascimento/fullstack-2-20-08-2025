@@ -1,9 +1,10 @@
 import ProductRepository from '@/infrastructure/database/product.repository.js';
-import { CreateProductInput } from '@/schema/product.schema.js';
+import { CreateProductInput, UpdateProductInput } from '@/schema/product.schema.js';
 import makeCreateProduct from '@/use-cases/product/create.js';
 import makeDeleteProduct from '@/use-cases/product/delete.js';
 import makeFindAllProducts from '@/use-cases/product/findAll.js';
 import makeFindProductById from '@/use-cases/product/findById.js';
+import makeUpdateProduct from '@/use-cases/product/update.js';
 import { NextFunction, Request, Response } from 'express';
 
 const repo = new ProductRepository();
@@ -14,7 +15,7 @@ export const handleCreateProduct = async (req: Request, res: Response, next: Nex
 
     const createProductCase = makeCreateProduct(repo)
     const createdProduct = createProductCase(productPayload)
-
+    
     res.status(201).json({ code: 201, message: "Produto criado com sucesso", data: createdProduct })
   } catch (error) {
     next(error);
@@ -47,6 +48,12 @@ export const handleFindProduct = async (req: Request, res: Response, next: NextF
 
 export const handleUpdateProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { id, ...updatePayload } = req.validatedData as { id: number } & UpdateProductInput;
+
+    const updateProductCase = makeUpdateProduct(repo)
+    const updatedProduct = updateProductCase(id, updatePayload)
+      
+    res.status(201).json({ code: 201, message: "Produto atualizado com sucesso", data: updatedProduct})
   } catch (error) {
     next(error);
   }
