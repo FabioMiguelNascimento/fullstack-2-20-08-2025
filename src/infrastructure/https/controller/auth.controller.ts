@@ -1,4 +1,6 @@
 import UserRepository from '@/infrastructure/database/user.repository.js';
+import { LoginSchemaType } from '@/schema/auth.schema.js';
+import makeLoginUser from '@/use-cases/auth/login.js';
 import makeRegisterUser from '@/use-cases/auth/register.js';
 import { NextFunction, Request, Response } from 'express';
 
@@ -6,7 +8,12 @@ const repo = new UserRepository();
 
 export const handleLoginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const loginPayload: LoginSchemaType = req.validatedData
 
+        const loginUserCase = makeLoginUser(repo)
+        const loggedinUser = loginUserCase(loginPayload)
+        
+        res.status(200).json({ code: 200, message: "Login efeituado com sucesso", data: loggedinUser})
     } catch (err) {
         next(err)
     }

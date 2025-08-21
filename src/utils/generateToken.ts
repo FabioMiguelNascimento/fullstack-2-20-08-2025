@@ -1,9 +1,8 @@
 import "dotenv/config";
 import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { StringValue } from "ms";
-import { Role } from "@prisma/client";
 
-export function generateAccessToken(id: string, role: Role): string {
+export function generateAccessToken(id: number, role: Role): string {
   const secretEnv = process.env.JWT_SECRET;
   const timeEnv = process.env.JWT_TIME;
 
