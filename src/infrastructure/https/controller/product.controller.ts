@@ -1,7 +1,7 @@
 import ProductRepository from '@/infrastructure/database/product.repository.js';
 import { CreateProductInput } from '@/schema/product.schema.js';
-import makeCreateProduct from '@/use-cases/user/create.js';
-import makeFindAllProducts from '@/use-cases/user/findAll.js';
+import makeCreateProduct from '@/use-cases/product/create.js';
+import makeFindAllProducts from '@/use-cases/product/findAll.js';
 import { NextFunction, Request, Response } from 'express';
 
 const repo = new ProductRepository();
