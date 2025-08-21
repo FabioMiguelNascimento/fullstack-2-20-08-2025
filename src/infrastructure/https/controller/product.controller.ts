@@ -1,6 +1,7 @@
 import ProductRepository from '@/infrastructure/database/product.repository.js';
 import { CreateProductInput } from '@/schema/product.schema.js';
 import makeCreateProduct from '@/use-cases/user/create.js';
+import makeFindAllProducts from '@/use-cases/user/findAll.js';
 import { NextFunction, Request, Response } from 'express';
 
 const repo = new ProductRepository();
@@ -20,6 +21,10 @@ export const handleCreateProduct = async (req: Request, res: Response, next: Nex
 
 export const handleFindAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const findAllProductsCase = makeFindAllProducts(repo)
+    const products = findAllProductsCase()
+
+    res.status(200).json({ code: 200, message: "Listando produtos com sucesso", data: products })
   } catch (error) {
     next(error);
   }

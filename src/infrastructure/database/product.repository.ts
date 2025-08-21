@@ -13,4 +13,10 @@ export default class ProductRepository implements IProductRepository {
         db.products.push(newProduct);
         return newProduct;
     }
+
+    findAll(): Product[] {
+        const products = db.products
+
+        return products
+    }
 }
