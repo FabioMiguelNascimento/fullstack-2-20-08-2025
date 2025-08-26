@@ -22,10 +22,7 @@ export function generateAccessToken(id: number, role: Role): string {
     role: role,
   };
 
-  console.log(`Payload`, payload)
-
   const options: SignOptions = { expiresIn: TIME };
 
   return jwt.sign(payload, SECRET, options);
 }
-  

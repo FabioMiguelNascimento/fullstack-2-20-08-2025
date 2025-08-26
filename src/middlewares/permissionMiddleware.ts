@@ -1,5 +1,5 @@
 import { UnauthorizedError } from '@/infrastructure/https/error/HttpErrors.js';
-import { Role } from '@prisma/client';
+import { Role } from '@/schema/user.schema.js';
 import { NextFunction, Request, Response } from 'express';
 
 export const requirePermission = (allowedRoles: Role[]) => {

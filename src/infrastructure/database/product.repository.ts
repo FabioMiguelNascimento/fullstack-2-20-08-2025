@@ -3,12 +3,13 @@ import IProductRepository from "@/interfaces/product.interface.js";
 import { CreateProductInput, Product, UpdateProductInput } from "@/schema/product.schema.js";
 
 export default class ProductRepository implements IProductRepository {
-    create(product: CreateProductInput): Product {
+    create(product: CreateProductInput, userId: string): Product {
         const newProduct: Product = {
+            ...product,
             id: db.products.length + 1,
             createdAt: new Date(),
             updatedAt: new Date(),
-            ...product
+            createdBy: userId
         };
         db.products.push(newProduct);
         return newProduct;

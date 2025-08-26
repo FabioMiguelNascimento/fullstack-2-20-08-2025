@@ -1,4 +1,4 @@
-import { Role } from '@/types/user/type.d.ts'
+import { Role } from '@/schema/user.schema.js';
 
 declare module 'express-serve-static-core' {
   export interface Request {

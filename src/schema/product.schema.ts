@@ -9,8 +9,10 @@ export const productSchema = z.object({
   name: z.string().min(1, 'Nome é necessário'),
   description: z.string().optional(),
   price: z.number().min(0, 'Preço deve ser um número positivo'),
+  quantity: z.number().min(0, 'Quantidade minima de 0').optional(),
   createdAt: z.preprocess((v) => (typeof v === 'string' ? new Date(v) : v), z.date()),
   updatedAt: z.preprocess((v) => (typeof v === 'string' ? new Date(v) : v), z.date()),
+  createdBy: z.string().min(1)
 });
 
 export type Product = z.infer<typeof productSchema>;
@@ -19,6 +21,7 @@ export const createProductSchema = z.object({
   name: z.string().min(1, 'Nome é necessário'),
   description: z.string().optional(),
   price: z.number().min(0, 'Preço deve ser um número positivo'),
+  quantity: z.number().min(0, 'Quantidade minima de 0').optional().default(0),
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;

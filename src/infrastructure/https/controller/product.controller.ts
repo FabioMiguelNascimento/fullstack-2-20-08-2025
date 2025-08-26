@@ -12,9 +12,10 @@ const repo = new ProductRepository();
 export const handleCreateProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const productPayload: CreateProductInput = req.validatedData
+    const userId = req.userId
 
     const createProductCase = makeCreateProduct(repo)
-    const createdProduct = createProductCase(productPayload)
+    const createdProduct = createProductCase(productPayload, userId)
     
     res.status(201).json({ code: 201, message: "Produto criado com sucesso", data: createdProduct })
   } catch (error) {
