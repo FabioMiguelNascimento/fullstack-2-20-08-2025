@@ -22,28 +22,7 @@ export function generateAccessToken(id: number, role: Role): string {
     role: role,
   };
 
-  const options: SignOptions = { expiresIn: TIME };
-
-  return jwt.sign(payload, SECRET, options);
-}
-
-export function generateRefreshToken(id: string): string {
-  const secretEnv = process.env.JWT_REFRESH_SECRET;
-  const timeEnv = process.env.JWT_REFRESH_TIME;
-
-  if (!secretEnv) {
-    throw new Error("JWT_REFRESH_SECRET não está definido nas variáveis de ambiente.");
-  }
-  const SECRET: Secret = secretEnv;
-
-  if (!timeEnv) {
-    throw new Error("JWT_REFRESH_TIME não está definido nas variáveis de ambiente.");
-  }
-  const TIME: StringValue = timeEnv as StringValue;
-  
-  const payload = {
-    id: id,
-  };
+  console.log(`Payload`, payload)
 
   const options: SignOptions = { expiresIn: TIME };
 
