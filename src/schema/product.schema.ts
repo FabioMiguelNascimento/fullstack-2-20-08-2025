@@ -12,7 +12,8 @@ export const productSchema = z.object({
   quantity: z.number().min(0, 'Quantidade minima de 0').optional(),
   createdAt: z.preprocess((v) => (typeof v === 'string' ? new Date(v) : v), z.date()),
   updatedAt: z.preprocess((v) => (typeof v === 'string' ? new Date(v) : v), z.date()),
-  createdBy: z.string().min(1)
+  createdBy: z.number().min(1),
+  updatedBy: z.number().min(1).nullable()
 });
 
 export type Product = z.infer<typeof productSchema>;

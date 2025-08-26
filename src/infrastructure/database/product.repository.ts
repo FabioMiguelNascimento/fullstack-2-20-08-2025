@@ -33,10 +33,10 @@ export default class ProductRepository implements IProductRepository {
         db.products.splice(index, 1)
     }
 
-    update(id: number, data: UpdateProductInput): Product {
+    update(id: number, userId: string,  data: UpdateProductInput): Product {
         let product = this.findById(id)
 
-        product = {...product, ...data} as Product
+        product = {...product, ...data, updatedAt: new Date(), updatedBy: userId} as Product
 
         const index = db.products.findIndex(x => x.id == id)
 

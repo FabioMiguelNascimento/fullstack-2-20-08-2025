@@ -50,9 +50,10 @@ export const handleFindProduct = async (req: Request, res: Response, next: NextF
 export const handleUpdateProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id, ...updatePayload } = req.validatedData as { id: number } & UpdateProductInput;
-
+    const userId = req.userId
+    
     const updateProductCase = makeUpdateProduct(repo)
-    const updatedProduct = updateProductCase(id, updatePayload)
+    const updatedProduct = updateProductCase(id, userId, updatePayload)
       
     res.status(201).json({ code: 201, message: "Produto atualizado com sucesso", data: updatedProduct})
   } catch (error) {
