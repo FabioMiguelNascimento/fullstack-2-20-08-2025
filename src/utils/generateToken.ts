@@ -1,3 +1,4 @@
+import { Role } from "@/schema/user.schema.js";
 import "dotenv/config";
 import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { StringValue } from "ms";

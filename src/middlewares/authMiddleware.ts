@@ -1,4 +1,4 @@
-import { Role } from '@/types/user/type.js';
+import { Role } from "@/schema/user.schema.js";
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
