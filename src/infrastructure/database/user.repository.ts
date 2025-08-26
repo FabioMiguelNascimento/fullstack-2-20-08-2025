@@ -1,8 +1,8 @@
 import db from "@/database/db.js";
-import UsersInterface from "@/interfaces/user.interface.js";
+import IUserRepository from "@/interfaces/user.interface.js";
 import { CreateUserSchema, User } from "@/schema/user.schema.js";
 
-export default class UserRepository implements UsersInterface {
+export default class UserRepository implements IUserRepository {
     findByEmail(email: string): User | undefined {
         return db.users.find(u => u.email === email)
     }
@@ -19,5 +19,11 @@ export default class UserRepository implements UsersInterface {
         db.users.push(newUser)
 
         return newUser
+    }
+
+    findAll(): User[] | void {
+        const users = db.users
+
+        return users
     }
 }
