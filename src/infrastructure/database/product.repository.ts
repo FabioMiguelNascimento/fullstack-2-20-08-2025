@@ -1,6 +1,6 @@
 import db from "@/database/db.js";
 import IProductRepository from "@/interfaces/product.interface.js";
-import { CreateProductInput, Product, UpdateProductInput } from "@/schema/product.schema.js";
+import { CreateProductInput, ListproductInput, Product, UpdateProductInput } from "@/schema/product.schema.js";
 
 export default class ProductRepository implements IProductRepository {
     create(product: CreateProductInput, userId: string): Product {
@@ -15,11 +15,31 @@ export default class ProductRepository implements IProductRepository {
         return newProduct;
     }
 
-    findAll(): Product[] {
-        const products = db.products
+    findAll(listInput: ListproductInput): Product[] {
+        const filterKeys = Object.keys(listInput);
 
-        return products
-    }
+            if (filterKeys.length === 0) {
+                return db.products;
+            }
+
+            return db.products.filter(product => {
+                return filterKeys.every(key => {
+                    const filterValue = listInput[key];
+                    const productValue = product[key];
+
+                    if (filterValue === undefined) {
+                        return true;
+                    }
+
+                    if (filterKeys.includes(key)) {
+                        return productValue.toLowerCase().includes((filterValue).toLowerCase());
+                    } else {
+                        return productValue === filterValue;
+                    }
+                });
+            });
+        }
+
 
     findById(id: number): Product | undefined {
         const product = db.products.find(p => p.id == id)

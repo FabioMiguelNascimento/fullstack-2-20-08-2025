@@ -1,12 +1,12 @@
 import { NotFoundError } from "@/infrastructure/https/error/HttpErrors.js";
 import IProductRepository from "@/interfaces/product.interface.js";
-import { Product } from "@/schema/product.schema.js";
+import { ListproductInput, Product } from "@/schema/product.schema.js";
 
 export default function makeFindAllProducts(repo: IProductRepository) {
-    return function findAll(): Product[] {
-        const products = repo.findAll()
+    return function findAll(listInput: ListproductInput): Product[] {
+        const products = repo.findAll(listInput)
 
-        if(products.length === 0) {
+        if(!products || products.length === 0) {
             throw new NotFoundError("Nenhum produto encontrado");
         }
 

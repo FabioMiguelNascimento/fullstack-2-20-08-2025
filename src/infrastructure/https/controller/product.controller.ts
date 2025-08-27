@@ -1,5 +1,5 @@
 import ProductRepository from '@/infrastructure/database/product.repository.js';
-import { CreateProductInput, UpdateProductInput } from '@/schema/product.schema.js';
+import { CreateProductInput, ListproductInput, UpdateProductInput } from '@/schema/product.schema.js';
 import makeCreateProduct from '@/use-cases/product/create.js';
 import makeDeleteProduct from '@/use-cases/product/delete.js';
 import makeFindAllProducts from '@/use-cases/product/findAll.js';
@@ -25,8 +25,10 @@ export const handleCreateProduct = async (req: Request, res: Response, next: Nex
 
 export const handleFindAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const listInput: ListproductInput = req.validatedData
+
     const findAllProductsCase = makeFindAllProducts(repo)
-    const products = findAllProductsCase()
+    const products = findAllProductsCase(listInput)
 
     res.status(200).json({ code: 200, message: "Listando produtos com sucesso", data: products })
   } catch (error) {

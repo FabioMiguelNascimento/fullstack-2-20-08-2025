@@ -25,6 +25,15 @@ export const createProductSchema = z.object({
   quantity: z.number().min(0, 'Quantidade minima de 0').optional().default(0),
 });
 
+export const listProductSchema = z.object({
+  name: z.string().min(1, 'Nome nao pode ser menor que um').optional(),
+  description: z.string().min(1, 'Descricao nao pode ser menor que 1').optional(),
+  price: z.number().min(0, 'Preço deve ser um número positivo').optional(),
+  quantity: z.number().min(0, 'Quantidade minima de 0').optional(),
+})
+
+export type ListproductInput = z.infer<typeof listProductSchema>
+
 export type CreateProductInput = z.infer<typeof createProductSchema>;
 
 export const updateProductSchema = createProductSchema.partial();

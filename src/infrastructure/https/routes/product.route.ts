@@ -1,14 +1,14 @@
 import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { requirePermission } from "@/middlewares/permissionMiddleware.js";
-import { validateBody, validateParams } from "@/middlewares/validateRequestMiddleware.js";
-import { createProductSchema, productIdSchema, updateProductSchema } from "@/schema/product.schema.js";
+import { validateBody, validateParams, validateQuery } from "@/middlewares/validateRequestMiddleware.js";
+import { createProductSchema, listProductSchema, productIdSchema, updateProductSchema } from "@/schema/product.schema.js";
 import express from 'express';
 import { handleCreateProduct, handleDeleteProduct, handleFindAllProducts, handleFindProduct, handleUpdateProduct } from "../controller/product.controller.js";
 
 
 const router = express.Router();
 
-router.get('/',handleFindAllProducts);
+router.get('/', validateQuery(listProductSchema), handleFindAllProducts);
 
 router.get('/:id', validateParams(productIdSchema), handleFindProduct);
 
