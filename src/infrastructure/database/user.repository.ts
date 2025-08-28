@@ -1,6 +1,6 @@
 import db from "@/database/db.js";
 import IUserRepository from "@/interfaces/user.interface.js";
-import { User, CreateUserSchema } from "@/schema/user.schema.js";
+import { CreateUserSchema, UpdateUserInput, User } from "@/schema/user.schema.js";
 
 export default class UserRepository implements IUserRepository {
     findByEmail(email: string): User | undefined {
@@ -37,5 +37,18 @@ export default class UserRepository implements IUserRepository {
         const index = db.users.findIndex(u => u.id == id)
 
         db.users.splice(index, 1)
+    }
+
+    updateUser(id: number, data: UpdateUserInput): User | null {
+        
+        let user = this.findUserById(id)
+
+        user = {...user, ...data, updatedAt: new Date()} as User
+
+        const index = db.users.findIndex(u => u.id == id)
+
+        db.users[index] = user
+
+        return db.users[index]
     }
 }

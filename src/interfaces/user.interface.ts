@@ -6,5 +6,5 @@ export default interface IUserRepository {
     findAll(): User[] | void;
     findUserById(id: number): User | undefined;
     delete(id: number): void;
-    updateUser(id: string, user: Partial<User>): User | null;
+    updateUser(id: number, user: Partial<User>): User | null;
 }

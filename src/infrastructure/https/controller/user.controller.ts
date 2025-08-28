@@ -1,6 +1,7 @@
 import UserRepository from '@/infrastructure/database/user.repository.js';
 import makeDeleteUser from '@/use-cases/user/delete.js';
 import makeGetAllUsers from '@/use-cases/user/getAll.js';
+import makeUpdateUser from '@/use-cases/user/update.js';
 import { NextFunction, Request, Response } from 'express';
 
 const repo = new UserRepository();
@@ -15,6 +16,21 @@ export const handleListUsers = async (req: Request, res: Response, next: NextFun
     next(err);
   }
 };
+
+export const handleUpdateUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.validatedData
+    const updateData = req.validatedData
+    const currentId = req.userId
+
+    const updateUserCase = makeUpdateUser(repo)
+    const updatedUser = updateUserCase(id, updateData, currentId)
+
+    res.status(200).json({ code: 200, message: "Usuario atualizado com sucesso", data: updatedUser })
+  } catch (err) {
+    next(err)
+  }
+}
 
 export const handleDeleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {

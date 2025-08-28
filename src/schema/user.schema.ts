@@ -28,4 +28,8 @@ export const createUserSchema = z.object({
 
 export type CreateUserSchema = z.infer<typeof createUserSchema>
 
+export const updateUserSchema = createUserSchema.partial()
+
+export type UpdateUserInput = z.infer<typeof updateUserSchema>
+
 export type UserIdType = z.infer<typeof userIdSchema>
