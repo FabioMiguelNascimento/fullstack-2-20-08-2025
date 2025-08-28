@@ -5,10 +5,15 @@ export default function makeGetAllUsers(repo: IUserRepository) {
     return function getAll() {
         const users = repo.findAll()
 
-        if(!users) {
+        if(!users || users.length === 0) {
             throw new NotFoundError("Nenhum usuario encontrado")
         }
 
-        return users
+        const usersWithoutPassword = users.map(user => {
+            const { password, ...userWithoutPassword } = user
+            return userWithoutPassword
+        })
+
+        return usersWithoutPassword
     }
 }
