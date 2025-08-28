@@ -1,6 +1,37 @@
 # Documentação da API
 
-# Stack
+## Instalação e Configuração
+
+### Pré-requisitos
+- **Node.js** (versão 18 ou superior)
+- **npm** ou **yarn**
+
+### 1. Instalar Dependências
+```bash
+npm install
+```
+
+### 2. Iniciar o Projeto
+
+#### Modo Desenvolvimento (com nodemon)
+```bash
+npm run dev
+```
+
+#### Modo Produção
+```bash
+npm run build
+npm start
+```
+
+**Nota:** O comando `build` compila o TypeScript e resolve os path aliases automaticamente.
+
+### 3. Verificar se está funcionando
+Acesse `http://localhost:3000/api/ping` - deve retornar `{"message": "pong"}`
+
+---
+
+## Stack 
 - `zod`: Validação de entrada de dados.
 - `typescript`: Tipagem estática para o código em desenvolvimento.
 - `express`: Criação do servidor e gerenciamento de rotas.
@@ -150,18 +181,19 @@ Endpoints para gerenciar usuários.
     -   **Descrição:** Lista todos os usuários.
     -   **Autenticação:** Requer autenticação.
 
--   **`PATCH /users/:id`**
+-   **`PUT /users/:id`**
     -   **Descrição:** Atualiza parcialmente um usuário.
-    -   **Autenticação:** Requer autenticação. O usuário só pode alterar os próprios dados, a menos que tenha permissão.
+    -   **Autenticação:** Requer autenticação. O usuário só pode alterar os próprios dados.
     -   **Parâmetros da Rota:** `id` (número inteiro positivo).
     -   **Corpo da Requisição (parcial):**
         ```json
         {
-          "name": "string (opcional)",
+          "name": "string (opcional, min 3 caracteres, max 30)",
           "email": "string (email válido, opcional)",
-          "password": "string (min 6 caracteres, opcional)"
+          "password": "string (min 6 caracteres, max 100, opcional)"
         }
         ```
+    -   **Nota:** A senha é automaticamente criptografada antes de ser salva. A resposta não inclui o campo `password` por segurança.
 
 -   **`DELETE /users/:id`**
     -   **Descrição:** Deleta um usuário.

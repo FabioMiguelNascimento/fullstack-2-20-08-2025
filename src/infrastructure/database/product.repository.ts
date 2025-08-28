@@ -24,15 +24,15 @@ export default class ProductRepository implements IProductRepository {
 
             return db.products.filter(product => {
                 return filterKeys.every(key => {
-                    const filterValue = listInput[key];
-                    const productValue = product[key];
+                    const filterValue = listInput[key as keyof ListproductInput];
+                    const productValue = product[key as keyof Product];
 
                     if (filterValue === undefined) {
                         return true;
                     }
 
-                    if (filterKeys.includes(key)) {
-                        return productValue.toLowerCase().includes((filterValue).toLowerCase());
+                    if (typeof productValue === 'string' && typeof filterValue === 'string') {
+                        return productValue.toLowerCase().includes(filterValue.toLowerCase());
                     } else {
                         return productValue === filterValue;
                     }
