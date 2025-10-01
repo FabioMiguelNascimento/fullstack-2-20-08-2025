@@ -31,3 +31,25 @@ export const handleRegisterUser = async (req: Request, res: Response, next: Next
         next(err);
     }
 }
+
+export const handleGetMe = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = parseInt(req.userId);
+        
+        const user = repo.findUserById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ code: 404, message: "Usuario nao encontrado" });
+        }
+
+        const { password, ...userWithoutPassword } = user;
+        
+        res.status(200).json({ 
+            code: 200, 
+            message: "Dados do usuario obtidos com sucesso", 
+            data: userWithoutPassword 
+        });
+    } catch (err) {
+        next(err);
+    }
+}

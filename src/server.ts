@@ -1,3 +1,4 @@
+import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
@@ -13,6 +14,13 @@ const app = express();
 const PORT = process.env.PORT ;
 
 const server = http.createServer(app);
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3002', 'http://127.0.0.1:3000', 'http://127.0.0.1:3002'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use(morgan('tiny'));
